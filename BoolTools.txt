@@ -1,0 +1,126 @@
+//[VarDef, InFolderPressed, 0]
+[VarDef, BtnSize, [IGet,"Preferences:Interface:Buttons Size"]]
+[VarDef, SubToolBtnSize, [Val, BtnSize*3.615]]
+
+[RoutineDef, ActiveSubToolBoolStart,
+    [IClick, [StrMerge,Tool:SubTool:,[GetActiveToolPath]], [Val, SubToolBtnSize-115], 8]
+]
+[RoutineDef, ActiveSubToolBoolCut,
+    [IClick, [StrMerge,Tool:SubTool:,[GetActiveToolPath]], [Val, SubToolBtnSize-75], 8]
+]
+[RoutineDef, ActiveSubToolBoolIntersect,
+    [IClick, [StrMerge,Tool:SubTool:,[GetActiveToolPath]], [Val, SubToolBtnSize-55], 8]
+]
+
+[RoutineDef, XBoolInset,
+    [IPress,Tool:SubTool:SelectUp]
+    [RoutineCall,ActiveSubToolBoolStart]
+    /*
+    [If, 1 == InFolderPressed,
+        [IPress,Tool:SubTool:New Folder],
+    ]
+    */
+    [IPress,Tool:SubTool:Duplicate]
+    [RoutineCall,ActiveSubToolBoolStart]
+    [IPress,Tool:SubTool:SelectDown]
+    /*
+    [If, 1 == InFolderPressed,
+        [IPress,Tool:SubTool:MoveUp]
+    ]
+    */
+    [IPress,Tool:SubTool:MoveUp]
+    [RoutineCall,ActiveSubToolBoolCut]
+    [IPress,Tool:SubTool:Duplicate]
+    [IPress,Tool:SubTool:MoveDown]
+    [RoutineCall,ActiveSubToolBoolIntersect]
+    [IPress,Tool:SubTool:SelectUp]
+]
+
+[ISubPalette, "Zplugin:BoolTools"]
+
+[IButton, "Zplugin:BoolTools:XInset", "Select Cutter SubTool (below) intersecting Primary SubTool (above) and press XInset to create an inset within the intersecting area. Also make sure starting group is NOT set - it does it automatically.",
+    [If, 0 == [SubToolGetActiveIndex],
+        [Note, "Cutter SubTool must be selected and placed below Primary SubTool."],
+        [RoutineCall, XBoolInset]
+    ],
+    0,
+    [Val, BtnSize*2]
+]
+/*
+[IButton, "Zplugin:BoolTools:Fold", "New Folder",
+    [IPress, "Tool:SubTool:New Folder"],
+    0,
+    [Val, BtnSize*1]
+]
+[IButton, "Zplugin:BoolTools:Dupli", "Duplicate",
+    [IPress, "Tool:SubTool:Duplicate"],
+    0,
+    [Val, BtnSize*1]
+]
+[IButton, "Zplugin:BoolTools:Up", "Select Up",
+    [IPress, "Tool:SubTool:SelectUp"],
+    0,
+    [Val, BtnSize*1]
+]
+[IButton, "Zplugin:BoolTools:Down", "Select Down",
+    [IPress, "Tool:SubTool:SelectDown"],
+    0,
+    [Val, BtnSize*1]
+]
+[IButton, "Zplugin:BoolTools:MvUp", "Move Up",
+    [IPress, "Tool:SubTool:MoveUp"],
+    0,
+    [Val, BtnSize*1]
+]
+[IButton, "Zplugin:BoolTools:MvDown", "Move Down",
+    [IPress, "Tool:SubTool:MoveDown"],
+    0,
+    [Val, BtnSize*1]
+]
+*/
+[IButton, "Zplugin:BoolTools:ToggleStart", "Toggle active SubTool boolean Start group.",
+    [IClick, [StrMerge,Tool:SubTool:,[GetActiveToolPath]], [Val, SubToolBtnSize-115], 8],
+    0,
+    [Val, BtnSize*2]
+]
+[IButton, "Zplugin:BoolTools:SetUnion", "Set active SubTool boolean Union.",
+    [IClick, [StrMerge,Tool:SubTool:,[GetActiveToolPath]], [Val, SubToolBtnSize-95], 8],
+    0,
+    [Val, BtnSize*4/3]
+]
+[IButton, "Zplugin:BoolTools:SetCut", "Set active SubTool boolean Cut.",
+    [IClick, [StrMerge,Tool:SubTool:,[GetActiveToolPath]], [Val, SubToolBtnSize-75], 8],
+    0,
+    [Val, BtnSize*4/3]
+]
+[IButton, "Zplugin:BoolTools:SetIntersect", "Set active SubTool boolean Intersect.",
+    [IClick, [StrMerge,Tool:SubTool:,[GetActiveToolPath]], [Val, SubToolBtnSize-55], 8],
+    0,
+    [Val, BtnSize*4/3]
+]
+/*
+[IButton, "Zplugin:BoolTools:STIndex", "Show active SubTool index.",
+    [Note, [SubToolGetActiveIndex]],
+    0,
+    //[Val, BtnSize*4]
+]
+[IButton, "Zplugin:BoolTools:STBtnRealWidth", "Check SubTool button real width to compare with calculated width.",
+    [Note, [IWidth,[StrMerge,Tool:SubTool:,[GetActiveToolPath]]]],
+    0,
+    //[Val, BtnSize*4]
+]
+[IButton, "Zplugin:BoolTools:STBtnCalcWidth", "Check SubTool button calculated width to compare with real width.",
+    [Note, SubToolBtnSize],
+    0,
+    //[Val, BtnSize*4]
+]
+*/
+
+/*
+[ISwitch, "Zplugin:BoolTools:InFolder", 0, "If InFolder button is pressed, the boolean processed SubTools3615 are put into a newly created folder.",
+    [VarSet, InFolderPressed, 1],
+    [VarSet, InFolderPressed, 0],
+    0,
+    [Val, BtnSize*3]
+]
+*/
