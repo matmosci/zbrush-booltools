@@ -1,3 +1,9 @@
+/*
+    BoolTools for Zbrush
+    https://github.com/matmosci/zbrush-booltools
+    Author: matmosci
+*/
+
 [VarDef, BtnSize, [IGet,"Preferences:Interface:Buttons Size"]]
 [VarDef, SubToolBtnSize, [Val, BtnSize*3.615]]
 [VarDef, ActiveSubToolPath, ""]
