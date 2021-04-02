@@ -1,5 +1,5 @@
 /*
-    BoolTools for Zbrush
+    BoolTools for ZBrush
     https://github.com/matmosci/zbrush-booltools
     Author: matmosci
 */
@@ -7,7 +7,7 @@
 [VarDef, BtnSize, [IGet,"Preferences:Interface:Buttons Size"]]
 [VarDef, SubToolBtnSize, [Val, BtnSize*3.615]]
 [VarDef, ActiveSubToolPath, ""]
-[VarDef, SubPaletteName, BoolTools]
+[VarDef, SubPaletteLocation, "Zplugin:BoolTools"]
 
 [RoutineDef, ActiveSubToolPathSet,
     [VarSet, ActiveSubToolPath, [StrMerge,Tool:Subtool:,[StrExtract,[IGetTitle,Tool:ItemInfo],0,[StrLength,[IGetTitle,Tool:ItemInfo]]-2]]]
@@ -29,7 +29,7 @@
     [IClick, ActiveSubToolPath, [Val, SubToolBtnSize-55], 8]
 ]
 
-[RoutineDef, XBoolInset,
+[RoutineDef, XBoolSlice,
     [IPress,Tool:Subtool:SelectUp]
     [RoutineCall,ActiveSubToolBoolStart]
     [IPress,Tool:Subtool:Duplicate]
@@ -43,88 +43,88 @@
     [IPress,Tool:Subtool:SelectUp]
 ]
 
-[ISubPalette, [StrMerge, "Zplugin:", SubPaletteName]]
+[ISubPalette, SubPaletteLocation]
 
-[IButton, [StrMerge, "Zplugin:", SubPaletteName, ":XInset"], "Select Cutter Subtool (below) intersecting Primary Subtool (above) and press XInset to create an inset within the intersecting area. Also make sure the starting group is NOT set - it does it automatically.",
+[IButton, [StrMerge, SubPaletteLocation, ":XSlice"], "Select Cutter Subtool (below) intersecting Primary Subtool (above) and press XSlice to perform boolean slice operation within the intersecting area. Also make sure the starting group is NOT set - it does it automatically.",
     [If, 0 == [SubToolGetActiveIndex],
         [Note, "Cutter Subtool must be selected and placed below Primary Subtool."],
-        [RoutineCall, XBoolInset]
+        [RoutineCall, XBoolSlice]
     ],
     0,
     [Val, BtnSize*2]
 ]
 
-[IButton, [StrMerge, "Zplugin:", SubPaletteName, ":ToggleStart"], "Toggle active Subtool boolean Start group.",
+[IButton, [StrMerge, SubPaletteLocation, ":ToggleStart"], "Toggle active Subtool boolean Start group.",
     [RoutineCall, ActiveSubToolBoolStart],
     0,
     [Val, BtnSize*2]
 ]
-[IButton, [StrMerge, "Zplugin:", SubPaletteName, ":SetUnion"], "Set active Subtool boolean Union.",
+[IButton, [StrMerge, SubPaletteLocation, ":SetUnion"], "Set active Subtool boolean Union.",
     [RoutineCall, ActiveSubToolBoolUnion],
     0,
     [Val, BtnSize*4/3]
 ]
-[IButton, [StrMerge, "Zplugin:", SubPaletteName, ":SetCut"], "Set active Subtool boolean Cut.",
+[IButton, [StrMerge, SubPaletteLocation, ":SetCut"], "Set active Subtool boolean Cut.",
     [RoutineCall, ActiveSubToolBoolCut],
     0,
     [Val, BtnSize*4/3]
 ]
-[IButton, [StrMerge, "Zplugin:", SubPaletteName, ":SetIntersect"], "Set active Subtool boolean Intersect.",
+[IButton, [StrMerge, SubPaletteLocation, ":SetIntersect"], "Set active Subtool boolean Intersect.",
     [RoutineCall, ActiveSubToolBoolIntersect],
     0,
     [Val, BtnSize*4/3]
 ]
 
 /* EXTRAS START */
-[ISubPalette, [StrMerge, "Zplugin:", SubPaletteName, ":Extras"]]
-[IButton, [StrMerge, "Zplugin:", SubPaletteName, ":Extras:Duplicate"], "Duplicate Subtool",
+[ISubPalette, [StrMerge, SubPaletteLocation, ":Extras"]]
+[IButton, [StrMerge, SubPaletteLocation, ":Extras:Duplicate"], "Duplicate Subtool",
     [IPress, "Tool:Subtool:Duplicate"],
     0,
     [Val, BtnSize*2]
 ]
-[IButton, [StrMerge, "Zplugin:", SubPaletteName, ":Extras:Up"], "Select Up",
+[IButton, [StrMerge, SubPaletteLocation, ":Extras:Up"], "Select Up",
     [IPress, "Tool:Subtool:SelectUp"],
     0,
     [Val, BtnSize*1]
 ]
-[IButton, [StrMerge, "Zplugin:", SubPaletteName, ":Extras:MvUp"], "Move Up",
+[IButton, [StrMerge, SubPaletteLocation, ":Extras:MvUp"], "Move Up",
     [IPress, "Tool:Subtool:MoveUp"],
     0,
     [Val, BtnSize*1]
 ]
-[IButton, [StrMerge, "Zplugin:", SubPaletteName, ":Extras:New Folder"], "New Folder",
+[IButton, [StrMerge, SubPaletteLocation, ":Extras:New Folder"], "New Folder",
     [IPress, "Tool:Subtool:New Folder"],
     0,
     [Val, BtnSize*2]
 ]
-[IButton, [StrMerge, "Zplugin:", SubPaletteName, ":Extras:Down"], "Select Down",
+[IButton, [StrMerge, SubPaletteLocation, ":Extras:Down"], "Select Down",
     [IPress, "Tool:Subtool:SelectDown"],
     0,
     [Val, BtnSize*1]
 ]
-[IButton, [StrMerge, "Zplugin:", SubPaletteName, ":Extras:MvDown"], "Move Down",
+[IButton, [StrMerge, SubPaletteLocation, ":Extras:MvDown"], "Move Down",
     [IPress, "Tool:Subtool:MoveDown"],
     0,
     [Val, BtnSize*1]
 ]
-[IButton, [StrMerge, "Zplugin:", SubPaletteName, ":Extras:STIndex"], "Show active Subtool index.",
+[IButton, [StrMerge, SubPaletteLocation, ":Extras:STIndex"], "Show active Subtool index.",
     [Note, [SubToolGetActiveIndex]],
     0,
     [Val, BtnSize*2]
 ]
-[IButton, [StrMerge, "Zplugin:", SubPaletteName, ":Extras:STPath"], "Show active Subtool path.",
+[IButton, [StrMerge, SubPaletteLocation, ":Extras:STPath"], "Show active Subtool path.",
     [RoutineCall, ActiveSubToolPathSet]
     [Note, ActiveSubToolPath],
     0,
     [Val, BtnSize*2]
 ]
-[IButton, [StrMerge, "Zplugin:", SubPaletteName, ":Extras:STBtnRealWidth"], "Check Subtool button real width to compare with calculated width.",
+[IButton, [StrMerge, SubPaletteLocation, ":Extras:STBtnRealWidth"], "Check Subtool button real width to compare with calculated width.",
     [RoutineCall, ActiveSubToolPathSet]
     [Note, [IWidth,ActiveSubToolPath]],
     0,
     [Val, BtnSize*4]
 ]
-[IButton, [StrMerge, "Zplugin:", SubPaletteName, ":Extras:STBtnCalcWidth"], "Check Subtool button calculated width to compare with real width.",
+[IButton, [StrMerge, SubPaletteLocation, ":Extras:STBtnCalcWidth"], "Check Subtool button calculated width to compare with real width.",
     [Note, SubToolBtnSize],
     0,
     [Val, BtnSize*4]
